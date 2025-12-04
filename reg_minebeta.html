@@ -75,12 +75,14 @@ z-index: 9999;
 <hr>
 <div class="text-box">
   <div class="text-box">
-<form action="https://api.web3forms.com/submit" method="POST">
-  <input type="hidden" name="access_key" value="c478594d-c86a-4c02-ab43-5cb8fe33f80c">
-  <input type="text" name="Нікнейм" placeholder="Введіть свій нікнейм" required>
-  <input type="email" name="email" required>
-  <textarea name="message" required></textarea>
-  <button type="submit">Submit</button>
+<form id="MineBetaReg">
+  <input type="text" name="nickname" placeholder="Введіть свій нікнейм" required>
+    <br>
+  <input type="email" name="email" placeholder="Введіть свій Gmail/Email" required>
+    <br><br>
+    Встановлення свого скіну
+  <input type="file" name="skin" accept="image/png" required>
+  <button type="submit">Зареєструватися</button>
 </form>
   </div>
 </div>
@@ -103,3 +105,53 @@ z-index: 9999;
     100% { transform: translateY(100vh); }
 }
 </style>
+
+<script>
+document.getElementById("MineBetaReg").addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    const form = event.target;
+    const nickname = form.nickname.value;
+    const email = form.email.value;
+    const file = form.skin.files[0];
+
+    const webhookURL = "https://discordapp.com/api/webhooks/1445367542163046414/GaGe1KMjoYvhH14fBQ_c8FqvireE7jzbAAX5NbjwUvsGmnOe36skSGzw7szGW8EVxQjW";
+
+    // 1. Завантажуємо скін як файл у Discord
+    const formData = new FormData();
+    formData.append("file", file);
+
+    const upload = await fetch(webhookURL + "?wait=true", {
+        method: "POST",
+        body: formData
+    });
+
+    const uploadJson = await upload.json();
+    const attachmentUrl = uploadJson.attachments?.[0]?.url;
+
+    // 2. Відправляємо embed
+    await fetch(webhookURL, {
+        method: "POST",
+        headers: {"Content-Type": "application/json"},
+        body: JSON.stringify({
+            embeds: [
+                {
+                    title: "Нова реєстрація MineBeta",
+                    color: 5763719, // зелений
+                    fields: [
+                        { name: "👤 Нікнейм", value: nickname, inline: true },
+                        { name: "📧 Email", value: email, inline: true }
+                    ],
+                    image: { url: attachmentUrl }, // показ скіну
+                    footer: {
+                        text: "MineBeta RegSystem"
+                    },
+                    timestamp: new Date().toISOString()
+                }
+            ]
+        })
+    });
+
+    alert("Успішно відправлено!");
+});
+</script>
