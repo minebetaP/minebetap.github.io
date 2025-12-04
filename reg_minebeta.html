@@ -121,28 +121,29 @@ document.getElementById("MineBetaReg").addEventListener("submit", async (event) 
 
     const webhookURL = "https://discordapp.com/api/webhooks/1445367542163046414/GaGe1KMjoYvhH14fBQ_c8FqvireE7jzbAAX5NbjwUvsGmnOe36skSGzw7szGW8EVxQjW";
 
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("payload_json", JSON.stringify({
+        embeds: [
+            {
+                title: "Нова реєстрація MineBeta",
+                color: 5763719,
+                fields: [
+                    { name: "👤 Нікнейм", value: nickname, inline: true },
+                    { name: "📧 Email", value: email, inline: true }
+                ],
+                image: { url: "attachment://" + file.name },
+                footer: { text: "MineBeta Registration System" },
+                timestamp: new Date().toISOString()
+            }
+        ]
+    }));
+
     await fetch(webhookURL, {
         method: "POST",
-        headers: {"Content-Type": "application/json"},
-        body: JSON.stringify({
-            embeds: [
-                {
-                    title: "Нова реєстрація MineBeta",
-                    color: 5763719, // зелений
-                    fields: [
-                        { name: "👤 Нікнейм", value: nickname, inline: true },
-                        { name: "📧 Email", value: email, inline: true }
-                    ],
-                    image: { url: attachmentUrl }, // показ скіну
-                    footer: {
-                        text: "MineBeta RegSystem"
-                    },
-                    timestamp: new Date().toISOString()
-
-                }
-            ]
-        })
+        body: formData
     });
+
     form.reset();
     alert("Успішно відправлено!");
 });
