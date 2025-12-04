@@ -74,7 +74,6 @@ z-index: 9999;
 </div>
 <hr>
 <div class="text-box">
-  <div class="text-box">
 <form id="MineBetaReg">
     <a>Нікнейм</a>
     <br>
@@ -90,7 +89,6 @@ z-index: 9999;
     <br><br><br>
   <button type="submit">Зареєструватися</button>
 </form>
-  </div>
 </div>
 <footer>
   <div class="text-box">Copyright © 2025 Nether9162. Всі права захищені. <a href="LICENSE.txt" style="color: yellow; text-decoration: none;"><b>Ліцензія</b></a></div>
@@ -123,19 +121,6 @@ document.getElementById("MineBetaReg").addEventListener("submit", async (event) 
 
     const webhookURL = "https://discordapp.com/api/webhooks/1445367542163046414/GaGe1KMjoYvhH14fBQ_c8FqvireE7jzbAAX5NbjwUvsGmnOe36skSGzw7szGW8EVxQjW";
 
-    // 1. Завантажуємо скін як файл у Discord
-    const formData = new FormData();
-    formData.append("file", file);
-
-    const upload = await fetch(webhookURL + "?wait=true", {
-        method: "POST",
-        body: formData
-    });
-
-    const uploadJson = await upload.json();
-    const attachmentUrl = uploadJson.attachments?.[0]?.url;
-
-    // 2. Відправляємо embed
     await fetch(webhookURL, {
         method: "POST",
         headers: {"Content-Type": "application/json"},
