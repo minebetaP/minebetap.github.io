@@ -63,6 +63,16 @@ pointer-events: none;
 z-index: 9999;
 }
 
+.snowflake {
+position: absolute;
+top: -10px;
+color: white;
+font-size: 1em;
+user-select: none;
+pointer-events: none;
+z-index: 9999;
+}
+
   </style>
   <link rel="icon" type="image/png" href="image/title.png">
   <font color="#FFFFFF">
@@ -77,11 +87,11 @@ z-index: 9999;
 <form id="MineBetaReg">
     <a>Нікнейм</a>
     <br>
-  <input type="text" name="nickname" placeholder="Введіть свій нікнейм" required>
+  <input type="text" name="nickname" placeholder="Nether9162; Codiha830" required>
     <br><br>
     <a>Email</a>
     <br>
-  <input type="email" name="email" placeholder="Введіть свій Gmail/Email" required>
+  <input type="email" name="email" placeholder="Gmail/Email" required>
     <br><br>
     <a>Скін(лише PNG)</a>
     <br>
@@ -147,4 +157,34 @@ document.getElementById("MineBetaReg").addEventListener("submit", async (event) 
     form.reset();
     alert("Успішно відправлено!");
 });
+</script>
+
+<script>
+  const numberOfSnowflakes = 50; // кількість сніжинок
+
+  for (let i = 0; i < numberOfSnowflakes; i++) {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.textContent = '❄'; // символ сніжинки
+    snowflake.style.left = Math.random() * window.innerWidth + 'px';
+    snowflake.style.fontSize = (Math.random() * 20 + 10) + 'px';
+    snowflake.style.opacity = Math.random();
+    snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+    snowflake.style.animationDelay = Math.random() * 5 + 's';
+    document.body.appendChild(snowflake);
+  }
+
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fall {
+      0% { transform: translateY(-10px); }
+      100% { transform: translateY(${window.innerHeight + 10}px); }
+    }
+    .snowflake {
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+  `;
+  document.head.appendChild(style);
 </script>
