@@ -1,89 +1,168 @@
-<div class="text-box">
-  <form id="MineBetaReg">
-    <input type="text" name="nickname" placeholder="Ваш нікнейм" style="background-color: #ffffff9f; width: 410px; border-radius: 5px;" required>
-    <br>
-    <input type="email" name="email" placeholder="Ваш Gmail" style="background-color: #ffffff9f; width: 410px; border-radius: 5px;" required>
-    <hr>
-    <b>Встановлення скіну</b><br>
-    <input type="file" name="skin" accept="image/png" style="width: 410px; cursor: pointer;" required>
-    <br><br>
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<title>Офіційний сайт MineBeta</title>
+<meta charset="utf-8">
 
-    <input type="text" name="website" style="display:none" autocomplete="off">
-    <script src="https://www.google.com/recaptcha/api.js?render=6LfHujUsAAAAADIb8Y-V8Inb5zdzpKE2pYRpMeAl"></script>
-    <br>
-    <button type="submit" style="background-color: #ffffff9f; border-radius: 10px; cursor: pointer;">Зареєструватися</button>
-  </form>
-</div>
+<link rel="icon" type="image/png" href="image/title.png">
 
-<script>
-let turnstileToken = null;
-function onTurnstile(token) {
-  turnstileToken = token;
+<script src="https://www.google.com/recaptcha/api.js?render=YOUR_SITE_KEY"></script>
+
+<style>
+body {
+    background-image: url('image/bkg.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    overflow: hidden;
+    cursor: crosshair;
 }
 
-document.addEventListener("DOMContentLoaded", () => {
-  const form = document.getElementById("MineBetaReg");
+.text-box {
+  padding: 10px;
+  background-color: hsla(0, 0%, 0%, 0.500);
+  border: 2px solid #ffffff;
+  text-align: left;
+  width: 98.2%;
+}
 
-  form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+.top-bar {
+  background-image: url("image/bedrock.png");
+  background-repeat: repeat;
+  padding: 5px;
+  height: 23px;
+}
 
-    // honeypot check
-    if (form.website.value) {
-      alert("Хоть бот, хоть консольщик, все одно не пропущу, бо прийняв куркотосік :)");
-      return;
-    }
+.top-bar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
 
-    // rate-limit: 1 відправка / 5 хв
-    const lastSubmit = localStorage.getItem("lastSubmit");
-    if (lastSubmit && (Date.now() - lastSubmit < 5*60*1000)) {
-      alert("Зачекайте 5 хвилин перед наступною відправкою, бо такі швидкі, що мама не гарюй");
-      return;
-    }
+.snowflake {
+    position: fixed;
+    top: -10px;
+    color: white;
+    pointer-events: none;
+    user-select: none;
+    animation: fall 10s linear infinite;
+}
 
-    if (!turnstileToken) {
-      alert("Ви не пройшли CAPTCHA, а за таке, я не дам вам зареєструватися");
-      return;
-    }
+@keyframes fall {
+    0% { transform: translateY(-10px); }
+    100% { transform: translateY(100vh); }
+}
+</style>
+</head>
 
-    // --- тут має бути fetch на Worker ---
-    const data = {
-      nickname: form.nickname.value,
-      email: form.email.value,
-      token: turnstileToken
-    };
+<body>
+<font color="#FFFFFF">
 
-    // приклад: поки Worker немає, просто alert
-    console.log(data); // для тесту
-    alert("test.access.granted.registration = 1");
+<div class="top-bar">
+  <a href="index.html" style="margin: 0 14px; text-decoration: none; color: white;" title="Головна сторінка сайту">Головна сторінка</a>
+  <a href="reg_minebeta.html" style="margin: 0 14px; text-decoration: none; color: white;" title="Реєстрація аккаунту"">Скачати</a>
+  <img src="image/main.png" width="130" align="right">
+</div>
 
-    // зберігаємо час сабміту
-    localStorage.setItem("lastSubmit", Date.now());
-    const token = await grecaptcha.execute('SITE_KEY', { action: 'register' });
+<hr>
 
+<div class="text-box">
+<form id="MineBetaReg">
 
-    // очищаємо форму
-    form.reset();
-    turnstileToken = null;
+<input type="text" name="nickname" placeholder="Ваш нікнейм"
+style="background-color:#ffffff9f;width:410px;border-radius:5px;" required>
+<br>
 
-    const start = Date.now();
+<input type="email" name="email" placeholder="Ваш Gmail"
+style="background-color:#ffffff9f;width:410px;border-radius:5px;" required>
 
-    form.addEventListener("submit", () => {
-    const timeSpent = Date.now() - start;
-    if (timeSpent < 7000) {
-    alert("Поспішиш - людей насмішиш");
+<hr>
+<b>Встановлення скіну</b><br>
+
+<input type="file" name="skin" accept="image/png" style="width: 410px; cursor: pointer;" required>
+
+<!-- HONEYPOT -->
+<input type="text" name="company" style="display:none">
+
+<br><br>
+<button type="submit"
+style="background-color:#ffffff9f;border-radius:10px;cursor:pointer;">
+Зареєструватися
+</button>
+
+</form>
+</div>
+
+<footer>
+<div class="text-box">Copyright © 2025 Nether9162. Всі права захищені. <a href="LICENSE.txt" style="color: yellow; text-decoration: none;"><b>Ліцензія</b></a></div>
+</footer>
+
+<script>
+/* ❄️ Сніжинки */
+for (let i = 0; i < 50; i++) {
+  const s = document.createElement("div");
+  s.className = "snowflake";
+  s.textContent = "❄";
+  s.style.left = Math.random() * window.innerWidth + "px";
+  s.style.fontSize = (10 + Math.random() * 20) + "px";
+  s.style.opacity = Math.random();
+  s.style.animationDuration = (5 + Math.random() * 5) + "s";
+  document.body.appendChild(s);
+}
+</script>
+
+<script>
+/* 🔐 АНТИ-БОТ СИСТЕМА */
+
+const form = document.getElementById("MineBetaReg");
+const startTime = Date.now();
+let interactionScore = 0;
+
+["mousemove","keydown","scroll","touchstart"].forEach(e =>
+  window.addEventListener(e, () => interactionScore++)
+);
+
+// nonce
+const nonce = crypto.randomUUID();
+sessionStorage.setItem("nonce", nonce);
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  // Honeypot
+  if (form.company.value) {
+    alert("Помилка 1: Помічені дії, схожі або є спамом, очищаю форму...");
     return;
+  }
 
-    let humanScore = 0;
-    ["mousemove", "keydown", "scroll", "touchstart"].forEach(e =>
-    window.addEventListener(e, () => humanScore++)
-    );
-
-    if (humanScore < 3) {
-    alert("Щось такий підозрілий, не дам зареєструватись >:(");
+  // Timing check
+  if (Date.now() - startTime < 4000) {
+    alert("Помилка 2: Доволі швидко робите форму, очищаю форму...");
     return;
-    }
+  }
 
+  // Interaction check
+  if (interactionScore < 3) {
+    alert("Помилка 3: Підозріла активність на сайті, очищаю форму...");
+    return;
+  }
+
+  // reCAPTCHA v3
+  const token = await grecaptcha.execute("6LfHujUsAAAAADIb8Y-V8Inb5zdzpKE2pYRpMeAl", {action:"register"});
+
+  console.log({
+    nickname: form.nickname.value,
+    email: form.email.value,
+    token: token,
+    nonce: nonce
   });
+
+  alert("Сповіщення 2: Тестова форма відправлена");
+  form.reset();
 });
 </script>
 
+</body>
+</html>
