@@ -1,83 +1,23 @@
-<!DOCTYPE html>
-<html lang="uk">
-<head>
-  <meta charset="utf-8">
-  <title>Офіційний сайт MineBeta</title>
-  <link rel="icon" type="image/png" href="image/title.png">
-
-  <style>
-    body {
-      background-image: url('image/bkg.png');
-      background-size: cover;
-      background-attachment: fixed;
-      background-position: center;
-      background-repeat: no-repeat;
-      height: 100vh;
-      overflow: hidden;
-      cursor: crosshair;
-      color: white;
-    }
-
-    .text-box {
-      padding: 10px;
-      background-color: rgba(0,0,0,0.5);
-      border: 2px solid #fff;
-      width: 98%;
-    }
-
-    .top-bar {
-      background-image: url("image/bedrock.png");
-      padding: 5px;
-      height: 23px;
-    }
-
-    .snowflake {
-      position: fixed;
-      top: -10px;
-      pointer-events: none;
-      user-select: none;
-      animation: fall linear infinite;
-    }
-
-    @keyframes fall {
-      from { transform: translateY(-10px); }
-      to { transform: translateY(110vh); }
-    }
-  </style>
-</head>
-
-<body>
-
-<div class="top-bar">
-  <a href="index.html">Головна</a>
-  <a href="download_minebeta.html">Скачати</a>
-  <img src="image/main.png" width="130" align="right">
-</div>
-
-<hr>
-
 <div class="text-box">
   <form id="MineBetaReg">
-    <input type="text" name="nickname" placeholder="Ваш нікнейм" required><br>
-    <input type="email" name="email" placeholder="Ваш Gmail" required><br><br>
-
+    <input type="text" name="nickname" placeholder="Ваш нікнейм" style="background-color: #ffffff9f; width: 410px; border-radius: 5px;" required>
+    <br>
+    <input type="email" name="email" placeholder="Ваш Gmail" style="background-color: #ffffff9f; width: 410px; border-radius: 5px;" required>
+    <hr>
     <b>Встановлення скіну</b><br>
-    <input type="file" name="skin" accept="image/png" required><br><br>
+    <input type="file" name="skin" accept="image/png" style="width: 410px; cursor: pointer;" required>
+    <br><br>
 
-    <!-- ОДИН Turnstile -->
-    <div class="cf-turnstile"
-         data-sitekey="SITE_KEY"
-         data-callback="onTurnstile"></div><br>
+    <!-- Honeypot поле -->
+    <input type="text" name="website" style="display:none" autocomplete="off">
 
-    <button type="submit">Зареєструватися</button>
+    <!-- Turnstile (один) -->
+    <div class="cf-turnstile" data-sitekey="SITE_KEY" data-callback="onTurnstile"></div>
+    <br>
+
+    <button type="submit" style="background-color: #ffffff9f; border-radius: 10px; cursor: pointer;">Зареєструватися</button>
   </form>
 </div>
-
-<footer>
-  <div class="text-box">
-    © 2025 Nether9162
-  </div>
-</footer>
 
 <script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
@@ -93,26 +33,41 @@ document.addEventListener("DOMContentLoaded", () => {
   form.addEventListener("submit", async (e) => {
     e.preventDefault();
 
-    if (!turnstileToken) {
-      alert("Пройди CAPTCHA");
+    // honeypot check
+    if (form.website.value) {
+      alert("Bot detected!");
       return;
     }
 
-    alert("Форма валідна, готово до відправки 🚀");
-    form.reset();
-  });
+    // rate-limit: 1 відправка / 5 хв
+    const lastSubmit = localStorage.getItem("lastSubmit");
+    if (lastSubmit && (Date.now() - lastSubmit < 5*60*1000)) {
+      alert("Зачекайте 5 хв перед наступною відправкою");
+      return;
+    }
 
-  for (let i = 0; i < 40; i++) {
-    const s = document.createElement("div");
-    s.className = "snowflake";
-    s.textContent = "❄";
-    s.style.left = Math.random() * 100 + "vw";
-    s.style.fontSize = 10 + Math.random() * 20 + "px";
-    s.style.animationDuration = 5 + Math.random() * 5 + "s";
-    document.body.appendChild(s);
-  }
+    if (!turnstileToken) {
+      alert("Пройдіть CAPTCHA");
+      return;
+    }
+
+    // --- тут має бути fetch на Worker ---
+    const data = {
+      nickname: form.nickname.value,
+      email: form.email.value,
+      token: turnstileToken
+    };
+
+    // приклад: поки Worker немає, просто alert
+    console.log(data); // для тесту
+    alert("Реєстрація успішна (тестова відправка)");
+
+    // зберігаємо час сабміту
+    localStorage.setItem("lastSubmit", Date.now());
+
+    // очищаємо форму
+    form.reset();
+    turnstileToken = null;
+  });
 });
 </script>
-
-</body>
-</html>
