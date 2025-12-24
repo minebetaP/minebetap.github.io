@@ -74,6 +74,19 @@ pointer-events: none;
 z-index: 9999;
 }
   </style>
+
+<div class="cf-turnstile"
+     data-sitekey="SITE_KEY"
+     data-callback="onTurnstile">
+</div>
+
+<script>
+let turnstileToken = null;
+function onTurnstile(token) {
+  turnstileToken = token;
+}
+</script>
+
   <link rel="icon" type="image/png" href="image/title.png">
   <font color="#FFFFFF">
 <div class="top-bar">
@@ -93,6 +106,8 @@ z-index: 9999;
 <br>
   <input type="file" name="skin" accept="image/png" required style="width: 410px; cursor: pointer;" placeholder="Файл має бути лише PNG" title="Файл має бути лише PNG, інакше файл скіну не приймається">
     <br><br><br>
+    <div class="cf-turnstile" data-sitekey="SITE_KEY"></div>
+    <br><br>
   <button type="submit" style="background-color: #ffffff9f; border-radius: 10px; cursor: pointer;">Зареєструватися</button>
 </form>
 </div>
