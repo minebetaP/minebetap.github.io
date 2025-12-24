@@ -114,53 +114,29 @@ for (let i = 0; i < 50; i++) {
 </script>
 
 <script>
-/* 🔐 АНТИ-БОТ СИСТЕМА */
-
-const form = document.getElementById("MineBetaReg");
-const startTime = Date.now();
-let interactionScore = 0;
-
-["mousemove","keydown","scroll","touchstart"].forEach(e =>
-  window.addEventListener(e, () => interactionScore++)
-);
-
-// nonce
-const nonce = crypto.randomUUID();
-sessionStorage.setItem("nonce", nonce);
-
-form.addEventListener("submit", async (e) => {
+document.getElementById("registerForm").addEventListener("submit", async e => {
   e.preventDefault();
 
-  // Honeypot
-  if (form.company.value) {
-    alert("Помилка 1: Помічені дії, схожі або є спамом, очищаю форму...");
+  const token = grecaptcha.getResponse();
+  if (!token) {
+    alert("Пройдіть капчу");
     return;
   }
 
-  // Timing check
-  if (Date.now() - startTime < 4000) {
-    alert("Помилка 2: Доволі швидко робите форму, очищаю форму...");
-    return;
-  }
+  const formData = new FormData(e.target);
+  formData.append("token", token);
 
-  // Interaction check
-  if (interactionScore < 3) {
-    alert("Помилка 3: Підозріла активність на сайті, очищаю форму...");
-    return;
-  }
-
-  // reCAPTCHA v3
-  const token = await grecaptcha.execute("6LfHujUsAAAAADIb8Y-V8Inb5zdzpKE2pYRpMeAl", {action:"register"});
-
-  console.log({
-    nickname: form.nickname.value,
-    email: form.email.value,
-    token: token,
-    nonce: nonce
+  const res = await fetch("https://nether9162s-project.vercel.app/api/register", {
+    method: "POST",
+    body: formData
   });
 
-  alert("Сповіщення 2: Тестова форма відправлена");
-  form.reset();
+  if (res.ok) {
+    e.target.reset();
+    window.location.href = "/download.html";
+  } else {
+    alert("Помилка реєстрації");
+  }
 });
 </script>
 
