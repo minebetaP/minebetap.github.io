@@ -8,18 +8,12 @@
     <input type="file" name="skin" accept="image/png" style="width: 410px; cursor: pointer;" required>
     <br><br>
 
-    <!-- Honeypot поле -->
     <input type="text" name="website" style="display:none" autocomplete="off">
-
-    <!-- Turnstile (один) -->
-    <div class="cf-turnstile" data-sitekey="SITE_KEY" data-callback="onTurnstile"></div>
+    <script src="https://www.google.com/recaptcha/api.js?render=6LfHujUsAAAAADIb8Y-V8Inb5zdzpKE2pYRpMeAl"></script>
     <br>
-
     <button type="submit" style="background-color: #ffffff9f; border-radius: 10px; cursor: pointer;">Зареєструватися</button>
   </form>
 </div>
-
-<script src="https://challenges.cloudflare.com/turnstile/v0/api.js" async defer></script>
 
 <script>
 let turnstileToken = null;
@@ -35,19 +29,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // honeypot check
     if (form.website.value) {
-      alert("Bot detected!");
+      alert("Хоть бот, хоть консольщик, все одно не пропущу, бо прийняв куркотосік :)");
       return;
     }
 
     // rate-limit: 1 відправка / 5 хв
     const lastSubmit = localStorage.getItem("lastSubmit");
     if (lastSubmit && (Date.now() - lastSubmit < 5*60*1000)) {
-      alert("Зачекайте 5 хв перед наступною відправкою");
+      alert("Зачекайте 5 хвилин перед наступною відправкою, бо такі швидкі, що мама не гарюй");
       return;
     }
 
     if (!turnstileToken) {
-      alert("Пройдіть CAPTCHA");
+      alert("Ви не пройшли CAPTCHA, а за таке, я не дам вам зареєструватися");
       return;
     }
 
@@ -60,14 +54,36 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // приклад: поки Worker немає, просто alert
     console.log(data); // для тесту
-    alert("Реєстрація успішна (тестова відправка)");
+    alert("test.access.granted.registration = 1");
 
     // зберігаємо час сабміту
     localStorage.setItem("lastSubmit", Date.now());
+    const token = await grecaptcha.execute('SITE_KEY', { action: 'register' });
+
 
     // очищаємо форму
     form.reset();
     turnstileToken = null;
+
+    const start = Date.now();
+
+    form.addEventListener("submit", () => {
+    const timeSpent = Date.now() - start;
+    if (timeSpent < 7000) {
+    alert("Поспішиш - людей насмішиш");
+    return;
+
+    let humanScore = 0;
+    ["mousemove", "keydown", "scroll", "touchstart"].forEach(e =>
+    window.addEventListener(e, () => humanScore++)
+    );
+
+    if (humanScore < 3) {
+    alert("Щось такий підозрілий, не дам зареєструватись >:(");
+    return;
+    }
+
   });
 });
 </script>
+
