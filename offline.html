@@ -1,0 +1,108 @@
+<title>Офіційний сайт MineBeta</title>
+<!DOCTYPE html>
+<meta charset="utf-8" translate="no">
+  <style>
+body {
+    background-image: url('image/bkg.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    overflow: auto;
+    cursor: crosshair;
+}
+
+.text-box {
+  padding: 10px;
+  background-color: hsla(0, 0%, 0%, 0.500);
+  border: 2px solid #ffffff;
+  border-radius: 0px;
+  text-align: left;
+  width: 98.2%;
+}
+
+.color-link {
+  color: red; /* звичайний стан */
+  text-decoration: none;
+}
+
+.color-link:hover {
+  color: yellow; /* при наведенні */
+}
+
+.top-bar {
+  background-image: url("image/bedrock.png"); /* текстура землі */
+  background-repeat: repeat;
+  padding: 5px;
+  height: 23px; /* щоб виглядало як панель */
+  border-bottom: 0px solid #000; /* як на сайті 2011 */
+}
+
+.top-bar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 0px;
+}
+
+.sociality {
+  padding: 10px;
+  background-color: hsla(0, 0%, 0%, 0.500);
+  border: 2px solid #ffffff;
+  border-radius: 0px;
+  text-align: left;
+  width: 98.2%;
+}
+.snowflake {
+position: absolute;
+top: -10px;
+color: white;
+font-size: 1em;
+user-select: none;
+pointer-events: none;
+z-index: 9999;
+}
+
+  </style>
+  <link rel="icon" type="image/png" href="image/title.png">
+  <font color="#FFFFFF">
+<div class="top-bar">
+  <a name="Head"></a>
+<img src="image/main.png" width="130" align="right">
+</div>
+<hr>
+  <div class="text-box">
+  <b>Немає зʼєднання з Інтернетом</b><br>
+  Зʼєднання з Інтернетом відсутнє, будь ласка, підключіться до Інтернету!!!
+  </div>
+
+<script>
+  const numberOfSnowflakes = 50; // кількість сніжинок
+
+  for (let i = 0; i < numberOfSnowflakes; i++) {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.textContent = '❄'; // символ сніжинки
+    snowflake.style.left = Math.random() * window.innerWidth + 'px';
+    snowflake.style.fontSize = (Math.random() * 20 + 10) + 'px';
+    snowflake.style.opacity = Math.random();
+    snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+    snowflake.style.animationDelay = Math.random() * 5 + 's';
+    document.body.appendChild(snowflake);
+  }
+
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fall {
+      0% { transform: translateY(-10px); }
+      100% { transform: translateY(${window.innerHeight + 10}px); }
+    }
+    .snowflake {
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+  `;
+  document.head.appendChild(style);
+</script>

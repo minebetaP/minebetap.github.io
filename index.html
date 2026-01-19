@@ -1,0 +1,130 @@
+<title>Офіційний сайт MineBeta</title>
+<!DOCTYPE html>
+<meta charset="utf-8" translate="no">
+  <style>
+body {
+    background-image: url('image/bkg.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    overflow: auto;
+    cursor: crosshair;
+}
+
+.text-box {
+  padding: 10px;
+  background-color: hsla(0, 0%, 0%, 0.500);
+  border: 2px solid #ffffff;
+  border-radius: 0px;
+  text-align: left;
+  width: 98.2%;
+}
+
+.color-link {
+  color: red; /* звичайний стан */
+  text-decoration: none;
+}
+
+.color-link:hover {
+  color: yellow; /* при наведенні */
+}
+
+.top-bar {
+  background-image: url("image/bedrock.png"); /* текстура землі */
+  background-repeat: repeat;
+  padding: 5px;
+  height: 23px; /* щоб виглядало як панель */
+  border-bottom: 0px solid #000; /* як на сайті 2011 */
+}
+
+.top-bar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+  margin-right: 0px;
+}
+
+.sociality {
+  padding: 10px;
+  background-color: hsla(0, 0%, 0%, 0.500);
+  border: 2px solid #ffffff;
+  border-radius: 0px;
+  text-align: left;
+  width: 98.2%;
+}
+.snowflake {
+position: absolute;
+top: -10px;
+color: white;
+font-size: 1em;
+user-select: none;
+pointer-events: none;
+z-index: 9999;
+}
+
+  </style>
+  <link rel="icon" type="image/png" href="image/title.png">
+  <font color="#FFFFFF">
+<div class="top-bar">
+  <a name="Head"></a>
+<a href="reg_minebeta.html" style="margin: 0 14px; text-decoration: none; color: white;" title="Щоб мати свій скін, потрапити до нашого серверу, підвищити захист, реєструйте свій аккаунт">Реєстрація</a>
+<a href="download_minebeta.html" style="margin: 0 14px; text-decoration: none; color: white;" title="Встановлення збірки">Скачати</a>
+<a href="https://www.youtube.com/@Nether9162-Minecraft" style="margin: 0 14px; text-decoration: none; color: white;" title="Публікую відео по MineBeta та іноді стрімлю">Youtube</a>
+<a href="https://discord.gg/N5PWEMuVkm" style="margin: 0 14px; text-decoration: none; color: white;" title="Публікую новини, відео на Youtube, скріншоти до-релізної гри, в Discord-каналі підписники можуть між собою розмовляти як текстом, так і голосом, іноді зі мною, можуть торгувати, домовлятись та інше...">Discord</a>
+<a href="https://www.instagram.com/nether9162_official/" style="margin: 0 14px; text-decoration: none; color: white;" title="Публікую життеві фото, відео та дописи">Instagram</a>
+<img src="image/main.png" width="130" align="right">
+</div>
+<hr>
+<div class="text-box">
+  <div class="text-box">
+  <b>Оновлення</b><br>
+  Поки немає оновлення
+  </div>
+<div class="text-box">
+  <b>Новини</b><br>
+  Поки немає новин
+  </div>
+<div class="text-box">
+  <b>Історія сайту</b><br>
+  20.11.2025: Відкриється сайт 28 грудня або 14 січня
+  <br>
+  24.11.2025: Оновлено: Прибрано вкладку "Тех. Підтримка"
+  <br>
+  13-14.12.2025: Виправлено: Трохи перероблена реєстрація, всі посилання у вкладці додано, тепер все натискається
+</div>
+</div>
+<footer>
+  <div class="text-box">Copyright © 2025 Nether9162. Всі права захищені. <a href="LICENSE.txt" style="color: yellow; text-decoration: none;"><b>Ліцензія</b></a></div>
+</footer>
+
+<script>
+  const numberOfSnowflakes = 50; // кількість сніжинок
+
+  for (let i = 0; i < numberOfSnowflakes; i++) {
+    const snowflake = document.createElement('div');
+    snowflake.classList.add('snowflake');
+    snowflake.textContent = '❄'; // символ сніжинки
+    snowflake.style.left = Math.random() * window.innerWidth + 'px';
+    snowflake.style.fontSize = (Math.random() * 20 + 10) + 'px';
+    snowflake.style.opacity = Math.random();
+    snowflake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+    snowflake.style.animationDelay = Math.random() * 5 + 's';
+    document.body.appendChild(snowflake);
+  }
+
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes fall {
+      0% { transform: translateY(-10px); }
+      100% { transform: translateY(${window.innerHeight + 10}px); }
+    }
+    .snowflake {
+      animation-name: fall;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+    }
+  `;
+  document.head.appendChild(style);
+</script>

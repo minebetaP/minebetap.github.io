@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<title>Офіційний сайт MineBeta</title>
+<meta charset="utf-8">
+
+<link rel="icon" type="image/png" href="image/title.png">
+
+<style>
+body {
+    background-image: url('image/bkg.png');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    overflow: hidden;
+    cursor: crosshair;
+}
+
+.text-box {
+  padding: 10px;
+  background-color: hsla(0, 0%, 0%, 0.500);
+  border: 2px solid #ffffff;
+  text-align: left;
+  width: 98.2%;
+}
+
+.top-bar {
+  background-image: url("image/bedrock.png");
+  background-repeat: repeat;
+  padding: 5px;
+  height: 23px;
+}
+
+.top-bar a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.snowflake {
+    position: fixed;
+    top: -10px;
+    color: white;
+    pointer-events: none;
+    user-select: none;
+    animation: fall 10s linear infinite;
+}
+
+@keyframes fall {
+    0% { transform: translateY(-10px); }
+    100% { transform: translateY(100vh); }
+}
+</style>
+</head>
+
+<body>
+<font color="#FFFFFF">
+
+<div class="top-bar">
+  <a href="index.html" style="margin: 0 14px; text-decoration: none; color: white;" title="Головна сторінка сайту">Головна сторінка</a>
+  <a href="download_minebeta.html" style="margin: 0 14px; text-decoration: none; color: white;" title="Встановлення збірки">Скачати</a>
+  <img src="image/main.png" width="130" align="right">
+</div>
+
+<hr>
+
+<div class="text-box">
+  Реєстрація вашого аккаунту на нашому проєкті!!!<br><br>
+<form id="MineBetaReg">
+<input name="nickname" required placeholder="Псевдонім у грі" minlength="3" maxlength="16" title="Введіть свій нікнейм у грі">
+<br>
+<input name="email" type="email" required placeholder="Email" title="Введіть свою адресу електронної пошти">
+<br>
+<input name="discord" required placeholder="Discord (name#0000)" minlength="3" maxlength="32" title="Введіть свій нікнейм у Discord">
+<br>
+<input name="skin" type="file" accept="image/png" required title="Встановіть свій скін (формат PNG та менше 100 КБ)">
+<br>
+<button type="submit" id="submitBtn">Зареєструватися</button>
+</form>
+</div>
+
+<footer>
+<div class="text-box">Copyright © 2025 Nether9162. Усі права захищено. <a href="LICENSE.txt" style="color: yellow; text-decoration: none;"><b>Ліцензія</b></a></div>
+</footer>
+
+<script>
+/* ❄️ Сніжинки */
+for (let i = 0; i < 50; i++) {
+  const s = document.createElement("div");
+  s.className = "snowflake";
+  s.textContent = "❄";
+  s.style.left = Math.random() * window.innerWidth + "px";
+  s.style.fontSize = (10 + Math.random() * 20) + "px";
+  s.style.opacity = Math.random();
+  s.style.animationDuration = (5 + Math.random() * 5) + "s";
+  document.body.appendChild(s);
+}
+</script>
+
+<script>
+const form = document.getElementById("MineBetaReg");
+
+form.addEventListener("submit", async (e) => {
+  e.preventDefault();
+
+  /* 🧠 Отримуємо мову сторінки */
+  const language = document.body.dataset.language || "Невідомо";
+
+  const nickname = form.nickname.value.trim();
+  const email = form.email.value.trim();
+  const discord = form.discord.value.trim();
+  const skin = form.skin.files[0];
+
+  /* ANTI_SPAM */
+  if (
+  nickname.length < 3 || nickname.length > 16 ||
+  discord.length < 3 || discord.length > 32
+) {
+    submitBtn.disabled = false;
+    alert("Нікнейм в грі має обмеження на 3-16 символів, нікнейм в Discord має обмеження на 3-32 символи");
+    return;
+  }
+  if (skin.size > 100 * 1024) {
+    submitBtn.disabled = false;
+    alert("Скін більше за 100 КБ");
+    return;
+  }
+
+  const data = new FormData();
+  data.append("file", skin);
+  data.append("payload_json", JSON.stringify({
+    embeds: [{
+      title: "Нова реєстрація MineBeta",
+      fields: [
+        { name: "👤 Нікнейм", value: nickname, inline: true },
+        { name: "📧 Email", value: email, inline: true },
+        { name: "💬 Discord", value: discord, inline: true },
+        { name: "🌍 Мова сайту", value: language, inline: true }
+      ],
+      timestamp: new Date().toISOString()
+    }]
+  }));
+
+  await fetch("https://discordapp.com/api/webhooks/1453475627620368437/c4zCJ_1kUo0yIoH08eRN1W6RCCkaGQYjXBEjEEi1bjkiHbNtdiy85qf9PwV76yUPotss", {
+    method: "POST",
+    body: data
+  });
+
+  form.reset();
+  alert("Ви успішно зареєструвались!!!");
+  window.location.href = "download_minebeta.html";
+});
+</script>
+
+</body>
+</html>
