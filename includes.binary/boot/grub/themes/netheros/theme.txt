@@ -1,0 +1,37 @@
+desktop-image: "hoho.png"
+title-text: "NetherOS GNU/Linux | Alpha 0.1"
+title-color: "#FFFFFF"
+
++ boot_menu {
+    left = 50%-220
+    top = 38%
+    width = 440
+    height = 220
+    item_color = "#CFCFCF"
+    selected_item_color = "#FFFFFF"
+    item_height = 16
+    item_padding = 0
+    item_icon_space = 0
+    item_spacing = 6
+    item_prefix = "  "
+    selected_item_prefix = "> "
+}
+
++ label {
+    id = "__timeout__"
+    left = 0
+    top = 75%
+    width = 100%
+    align = "center"
+    color = "#FFFFFF"
+    text = "Автоматичний запуск через %d секунд"
+}
+
++ label {
+    left = 0
+    top = 94%
+    width = 100%
+    align = "center"
+    color = "#A0A0A0"
+    text = "↑↓ | Вибір   Enter | Завантажити/Вибрати   E | Редагувати   C | Командний рядок GRUB"
+}

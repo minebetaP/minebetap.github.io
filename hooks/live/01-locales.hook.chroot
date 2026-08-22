@@ -1,0 +1,13 @@
+#!/bin/sh
+
+cat > /etc/locale.gen << EOF
+en_US.UTF-8 UTF-8
+uk_UA.UTF-8 UTF-8
+EOF
+
+locale-gen
+
+cat > /etc/default/locale << EOF
+LANG=uk_UA.UTF-8
+LANGUAGE=en_US:uk_UA
+EOF
